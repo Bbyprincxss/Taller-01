@@ -1,0 +1,154 @@
+@startuml
+skin rose
+
+entity RestauranteMexicano{
+}
+interface SistemaRestaurante{
+    -administrarMesa(mesa : Mesa)
+    -administrarPersonal(personal : Personal)
+    -administrarPlato(plato : Plato)
+    -procesarPedido(ResumenPedido : ResumenaPedido)
+}
+entity Instalador{
+     -sistema : SistemaRestaurante
+     +instalador()
+     +iniciarSistema()
+}
+entity SistemaRestauranteImpl{
+    -listaMesa : ListaMesa
+    -listaCliente : ListaCliente
+    -listaPersonal : ListaPersonal
+    -listaPlato : ListaPlato
+    +SistemaRestauranteImpl()
+}
+
+entity Personal{
+    -nombre : String
+    -edad : int
+    -tipoContrato : String
+    -fechaContratacion : int
+
+    +getEdad() : int
+    +getNombre() : String
+    +getTipoContrato() : String
+    +setTipoContrato() : String
+    +getFechaContratacion() : int
+    +setFechaContratacion() : int
+
+}
+entity ListaPersonal{
+    -cantidadMaxima : int
+    -cantidadActual : int
+    -lista : Personal[]
+
+    +ListaPersonal(cantidadMaxima : int)
+    +getCantidadActual() : int
+    +setCantidadActual() : int
+    +agregar(personal: Personal) : boolean
+    +eliminar(personal: Personal) : boolean
+    +obtener(personal: Personal) : boolean
+
+}
+entity Mesa{
+    -numero : int
+    -estado : String
+    -cliente : Cliente[]
+    -posicion1 : x
+    -posicion2 : y
+    -personal: Personal
+
+    +Mesa(numero : int, personal: Personal)
+    +getNumero() : int
+    +getEstado() : String
+    +setEstado() : String
+}
+
+entity ListaMesa{
+    -cantidadMaxima : int
+    -cantidadActual : int
+    -lista : Mesas[]
+
+    +ListaMesa(cantidadMaxima : int)
+    +getCantidadActual() : int
+    +setCantidadActual() : int
+    +obtener(numero : int) : Mesa
+}
+entity Plato{
+    -nombre : String
+    -precio : int
+    -categoria : String
+    -stock : int
+
+    +Plato(nombre : String, precio : int, categoria : String, stock : int)
+    +getprecio() : int
+    +setprecio() : int
+    +getnombre() : String
+}
+entity ListaPlato{
+    -cantidadMaxima : int
+    -cantidadActual : int
+    -lista : Plato[]
+
+    +ListaPlato(cantidadMaxima : int)
+    +getcantidadActual() : int
+    +setcantidadActual() : int
+    +agregar(nombre : String) : boolean
+    +eliminar(nombre : String) : boolean
+    +obtener(nombre : String) : Plato
+}
+entity Cliente{
+    -nombre : String
+    -edad : int
+    -platoDeseado : Plato[]
+
+    +Cliente(nombre : String, edad : int)
+    +getPlatoDeseado() : Plato[]
+    +setPlatoDeseado() : Plato[]
+    +getedad() : int
+    +getnombre() : String
+
+}
+entity ListaCliente{
+    -cantidadMaxima : int
+    -cantidadActual : int
+    -lista : Cliente[]
+
+    +ListaCliente(cantidadMaxima : int)
+    +getcantidadActual() : int
+    +setcantidadActual() : int
+    +agregar(cliente : Cliente) : boolean
+}
+entity ResumenPedido{
+    -listadoProductos : Plato[]
+    -precioUnitario : int
+    -totalAcumulado : int
+
+    +ResumenPedido(mesa : Mesa)
+    +toString() : void
+
+}
+entity Boleta{
+    -ResumenPedido : ResumenPedido
+    -totalPedido : int
+    -trabajadorQueAtendio : String
+    -n°Mesa : int
+
+    +Boleta(ResumenPedido : ResumenaPedido)
+    +toString() : void
+
+}
+SistemaRestauranteImpl"1" <-- "1"ListaPlato : posee
+SistemaRestauranteImpl"1"<--"1"ListaPersonal : posee
+SistemaRestauranteImpl"1" <-- "1"ListaCliente : posee
+SistemaRestauranteImpl"1"<--"1"ListaMesa : posee
+SistemaRestauranteImpl..|>SistemaRestaurante : implementa
+SistemaRestaurante"1" -- "1"Instalador : instala
+Plato"1"-->"1"ResumenPedido : genera
+ResumenPedido"1..*"--"1"Boleta : genera
+Personal"1"--*"1"ListaPersonal : contiene
+Plato"1"--*"1"ListaPlato : contiene
+Cliente"1"--*"1"ListaCliente : contiene
+Mesa"1"--*"1"ListaMesa : contiene
+
+
+@enduml

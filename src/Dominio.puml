@@ -1,0 +1,48 @@
+@startuml
+skin rose
+left to right direction
+entity RestauranteMexicano{
+}
+entity Personal{
+    nombre
+    edad
+    tipo de contrato
+    fecha de contratacion
+}
+entity Mesa{
+    numero
+    estado
+}
+entity Plato{
+    nombre
+    precio
+    categoria
+    stock
+}
+entity Cliente{
+    nombre
+    edad
+    plato deseado
+}
+entity ResumenPedido{
+    listado de productos
+    precio unitario
+    total acumulado
+}
+entity Boleta{
+    ResumenPedido
+    total del pedido
+    trabajador que atendió el pedido
+    n° de mesa
+}
+RestauranteMexicano"1"*-->"1..*"Personal : tiene
+RestauranteMexicano"1"*-->"*"Mesa : tiene
+RestauranteMexicano"1"*-->"1..*"Plato : tiene
+Personal"1"-->"1"Mesa : atiende
+Mesa"1"-->"1"Cliente : tiene
+Cliente"1"-->"1"Plato : pide
+Cliente"1"-->"1"ResumenPedido : genera
+Plato"1"-->"1"ResumenPedido : genera
+ResumenPedido"1..*"-->"1"Boleta : genera
+
+@enduml
