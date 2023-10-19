@@ -2,40 +2,64 @@ package Program.Model;
 
 public class Mesa {
     private int numero;
-    private String estado;
+    private boolean estado;
     private Cliente[] cliente;
-    private String posicion1;
-    private String posicion2;
+    private String posicion;
     private Personal personal;
+    private Plato[] platosPedidos;
+    private int cantidadPlatosMesa;
 
-    public Mesa(int numero, String estado, Cliente[] cliente, String posicion1, String posicion2, Personal personal) {
+
+    public Mesa(int numero, Cliente[] cliente, String posicion, Personal personal) {
         this.numero = numero;
-        this.estado = estado;
+        this.estado = false;
         this.cliente = cliente;
-        this.posicion1 = "x";  //duda  tenemos una idea sobre las mesas:)
-        this.posicion2 = "y"; //duda
+        this.posicion = posicion;
         this.personal = personal;
+        this.platosPedidos = new Plato[100];
+        this.cantidadPlatosMesa = 100;
+    }
+
+    public Plato[] getPlatosPedidos() {
+        return platosPedidos;
+    }
+
+    public int getCantidadPlatosMesa() {
+        return this.cantidadPlatosMesa;
+    }
+    public void setCantidadPlatosMesa(int nuevo){
+        this.cantidadPlatosMesa = nuevo;
+    }
+
+    public void setPlatosPedidos(Plato[] platosPedidos) {
+        this.platosPedidos = platosPedidos;
     }
 
     public int getNumero() {
         return numero;
     }
 
-
-    public String getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
-    }
-
-    public Cliente[] getCliente() {
-        return cliente;
     }
 
     public void setCliente(Cliente[] cliente) {
         this.cliente = cliente;
     }
 
+    public void setPersonal(Personal personal) {
+        this.personal = personal;
+    }
+
+    public Cliente[] getCliente() {
+        return cliente;
+    }
+
+    public Personal getPersonal() {
+        return personal;
+    }
 }

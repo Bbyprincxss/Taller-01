@@ -1,3 +1,6 @@
+import Program.Model.ListaPersonal;
+import Program.Model.ListaPlato;
+import Program.Model.Plato;
 import Program.Service.SistemaRestaurante;
 import Program.Service.SistemaRestauranteImpl;
 import Program.Util.Instalador;
@@ -8,17 +11,21 @@ import java.io.PrintStream;
 
 //instalador
 public class Main {
+
     public static void main(String[] args) {
-        SistemaRestaurante sistemaRestaurante = instalarSistema();
-        menuDelSistema(sistemaRestaurante);
+       SistemaRestaurante sistemaRestaurante = instalarSistema();
+       menuDelSistema(sistemaRestaurante);
+
     }
 
     public static SistemaRestaurante instalarSistema() {
-        Instalador instalador = new Instalador(instalarSistema(),new SistemaRestauranteImpl());
+        Instalador instalador = new Instalador();
+
         return instalador.iniciarSesion();
     }
 
     public static void menuDelSistema(SistemaRestaurante sistemaRestaurante){
+        SistemaRestauranteImpl sistema = new SistemaRestauranteImpl();
         boolean menuActivo = true;
 
         while (menuActivo){
@@ -28,64 +35,35 @@ public class Main {
             StdOut.println("[2] Gestionar inventario");
             StdOut.println("[3] Administrar trabajadores");
             StdOut.println("[4] Procesar ordenes de clientes");
-            StdOut.println("*Ingrese una opcion :*");
+            StdOut.println("[5] Cerrar programa");
+            StdOut.println("------------------------------------");
+            StdOut.println("*Ingrese una opcion : ");
             int opcion = StdIn.readInt();
 
             switch (opcion){
                 case 1 :
-                    administrarMesa(sistemaRestaurante);
+                    sistema.administrarMesa();
+
                     break;
                 case 2 :
-                    administrarPersonal(sistemaRestaurante);
+                    sistema.administrarPlato();
+
                     break;
                 case 3 :
-                    StdOut.println("*-*-*-*-Rellene los datos-*-*-*-*");
-                    StdOut.println("Nombre");
-                    String nombreTrabajador = StdIn.readString();
-                    StdOut.println("Edad");
-                    int edadTrabajador = StdIn.readInt();
-                    StdOut.println("Tipo de Contrato");
-                    String tipoDeContrato = StdIn.readString();
-                    StdOut.println("Fecha de Contratacion");
-                    int fechaDeContratacion = StdIn.readInt();
-
-
+                    sistema.administrarPersonal();
                     break;
                 case 4 :
-                    administrarPlato (sistemaRestaurante);
+                    sistema.entregarBoleta();
+                    break;
+                case 5:
+                    StdOut.println("Cerrando programa...");
+                    menuActivo = false;
                     break;
                 default:
-                    mensajeError();
+                    sistema.mensajeError();
             }
+            break;
         }
     }
-
-    private static void mensajeError(){
-        StdOut.println("Se ingreso una opcion invalida...intente nuevamente");
-    }
-
-    private static void administrarMesa (SistemaRestaurante sistemaNuevo){
-
-
-    }
-
-    private static void administrarPlato (SistemaRestaurante sistemaNuevo){
-
-    }
-
-    private static void administrarPersonal (SistemaRestaurante sistemaNuevo){
-        StdOut.println("Ingrese el nombre del trabajador a gestionar: ");
-        String nombre = StdIn.readString();
-
-
-
-
-
-    }
-    private static void procesarPedido (SistemaRestaurante sistemaNuevo){
-
-    }
-
-
 }
 
